@@ -28,7 +28,11 @@ jobs:
         run: ruff check .
 
       - name: Unit tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: pytest
 
       - name: Compile check
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: python -m compileall app
