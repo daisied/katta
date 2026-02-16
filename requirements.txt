@@ -1,4 +1,4 @@
-openai>=1.65,<2
+openai>=1.65,<3
 discord.py>=2.4,<3
 python-dotenv>=1.0.1,<2
 httpx>=0.27,<1
