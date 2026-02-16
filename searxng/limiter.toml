@@ -1,0 +1,3 @@
+# Disable all bot detection / rate limiting
+[botdetection.ip_limit]
+link_token = false

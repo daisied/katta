@@ -1,0 +1,45 @@
+# VCS
+.git
+.gitignore
+.github
+
+# Local config / secrets
+.env
+.env.*
+!.env.example
+.claude
+
+# Python caches
+__pycache__
+*.py[cod]
+.pytest_cache
+.ruff_cache
+.coverage
+htmlcov
+
+# Runtime data
+app/data/history
+app/data/logs
+app/data/*.db
+app/data/*.sqlite*
+app/data/message_history.json
+app/data/notify_state.json
+app/data/rss_feeds.json
+app/data/curiosity_log.json
+app/data/conversation_state.json
+app/data/packages.txt
+app/data/memory.md
+app/data/startup.sh
+app/data/permissions.json
+app/data/sources.json
+
+# Keep bootstrap templates
+!app/data/memory.template.md
+!app/data/permissions.example.json
+!app/data/sources.example.json
+!app/data/startup.example.sh
+!app/data/README.md
+
+# Local artifacts
+tests
+docs

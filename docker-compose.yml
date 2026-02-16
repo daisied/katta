@@ -1,0 +1,47 @@
+services:
+  katta:
+    build: .
+    container_name: katta
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - SEARXNG_URL=http://searxng:8080
+      - PATH=/host-bin:/usr/local/bin:/usr/bin:/bin
+      - KATTA_COMMAND_MODE=${KATTA_COMMAND_MODE:-safe}
+    volumes:
+      - ./app/data:/app/app/data
+      - ./app/plugins:/app/app/plugins
+      - ./app/scripts:/app/app/scripts
+      # Mount host binaries directory (read-only for safety)
+      # Put binaries like 'bird' in ./bin on the host
+      - ./bin:/host-bin:ro
+    depends_on:
+      searxng:
+        condition: service_healthy
+    networks:
+      - katta-net
+
+  searxng:
+    image: searxng/searxng:latest
+    container_name: katta-searxng
+    restart: unless-stopped
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8080/
+    volumes:
+      - ./searxng:/etc/searxng:rw
+    networks:
+      - katta-net
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8080/search?q=test&format=json', timeout=5)\" || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    # Uncomment to expose SearXNG UI for debugging:
+    # ports:
+    #   - "8080:8080"
+
+networks:
+  katta-net:
+    driver: bridge

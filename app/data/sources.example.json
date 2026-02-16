@@ -1,0 +1,17 @@
+{
+  "rss_feeds": [
+    {
+      "name": "Hacker News",
+      "url": "https://hnrss.org/newest"
+    }
+  ],
+  "subreddits": [
+    "selfhosted",
+    "MachineLearning"
+  ],
+  "github_dorks": [],
+  "search_queries": [
+    "ai agent release notes",
+    "developer tooling updates"
+  ]
+}

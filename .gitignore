@@ -1,0 +1,53 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local env files and editor config
+.env
+.env.*
+!.env.example
+.claude/
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+
+# Runtime state (never publish)
+app/data/history/
+app/data/logs/
+app/data/*.db
+app/data/*.sqlite*
+app/data/message_history.json
+app/data/notify_state.json
+app/data/rss_feeds.json
+app/data/curiosity_log.json
+app/data/conversation_state.json
+app/data/packages.txt
+app/data/memory.md
+app/data/startup.sh
+app/data/permissions.json
+app/data/sources.json
+
+# Keep bootstrap templates
+!app/data/.gitkeep
+!app/data/memory.template.md
+!app/data/permissions.example.json
+!app/data/sources.example.json
+!app/data/startup.example.sh
+!app/data/README.md
+
+# User plugin workspace (empty by default)
+app/plugins/*
+!app/plugins/.gitkeep
