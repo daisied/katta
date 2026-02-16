@@ -1,27 +1,21 @@
-# Katta
+<p align="center">
+  <img src="docs/assets/katta-logo.png" alt="Katta Logo" width="180">
+</p>
+<h1 align="center">Katta</h1>
+<p align="center"><strong>Personal research agent that actually digs deep, with permanent memory.</strong></p>
+<p align="center">Deploy in minutes. Ask almost anything. Get grounded answers from multiple sources.</p>
 
-Autonomous Discord research agent with tool use, grounded web retrieval, and persistent local memory.
+## Why This Exists
 
-## Why Katta Exists
+Most LLM workflows felt unreliable in real usage:
 
-I built Katta because too many LLM workflows felt unreliable in real use:
+- confident hallucinations
+- shallow source coverage
+- weak traceability when wrong
 
-- Hallucinated facts delivered with confidence
-- Weak source depth (single-search, shallow snippets)
-- Poor traceability when answers were wrong
+Katta is built to reduce that failure mode with tool-grounded deep research, source diversity, and persistent memory.
 
-Katta is designed to do the opposite: minimum-hallucination deep searching for virtually anything, with explicit tool-grounded retrieval and operational guardrails.
-
-## Why This Project Is Different
-
-- Grounded-by-default workflow: tools first, synthesis second.
-- Multi-source deep research pipeline (web + Reddit + X + page fetch).
-- Freshness-oriented retrieval for fast-changing topics.
-- Self-hosted, Docker-first runtime with persistent memory.
-- Admin/non-admin access model for safer shared usage.
-- Security controls for sensitive paths, output redaction, and command mode safety.
-
-## Quick Start
+## Quick Setup
 
 ### 1. Prerequisites
 
@@ -29,118 +23,100 @@ Katta is designed to do the opposite: minimum-hallucination deep searching for v
 - Discord bot token
 - OpenRouter or MiniMax API key
 
-### 2. Configure Environment
+### 2. Configure
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` with:
+Set these values in `.env`:
 
 - `DISCORD_BOT_TOKEN`
 - `ALLOWED_USER_ID`
 - `OPENROUTER_API_KEY` or `MINIMAX_API_KEY`
 
-### 3. Launch
+### 3. Deploy
 
 ```bash
 docker compose up -d --build
-```
-
-Tail logs:
-
-```bash
 docker compose logs -f katta
 ```
 
-### 4. Verify
+### 4. Use It
 
-Send your bot a DM. Example prompts:
+DM your bot:
 
 - `What tools do you have available?`
 - `Research the latest SearXNG deployment best practices`
 
-## Runtime Model
+## Big Impact, Minimal Setup
 
-- Runtime state lives in `app/data/` (mounted volume).
-- Repo tracks templates only; runtime artifacts are git-ignored.
-- On first boot, `app/main.py` creates missing runtime files from templates.
+- Grounded-by-default workflow: tools first, synthesis second.
+- Multi-source deep research: web + Reddit + X + page fetch.
+- Freshness-oriented retrieval for fast-moving topics.
+- Persistent memory and runtime state across restarts.
+- Self-hosted deployment with a production-style structure.
 
 ## Security Model
 
-Katta is designed for trusted self-hosted use.
+Katta is a trusted self-hosted agent.
 
 - Admin user has full tool access.
-- Non-admin users are restricted to search/read tool set.
-- Secret values are redacted from tool output.
+- Non-admin users are restricted to search/read tools.
 - Sensitive file paths are blocked.
+- Secret values are redacted from outputs.
 - `KATTA_COMMAND_MODE=safe` blocks dangerous shell patterns.
 
-Use `trusted` mode only when you intentionally need unrestricted shell behavior.
-
-## Developer Workflow
-
-Install dependencies:
-
-```bash
-make bootstrap
-```
-
-Run checks:
-
-```bash
-make ci
-```
+Use `trusted` mode only when you intentionally want wider shell capability.
 
 ## Project Structure
 
 ```text
 app/
   core/
-    agent.py           # LLM loop, tool orchestration, prompt building
-    tools.py           # Tool implementations (shell, web, file, research)
-    scout.py           # Source scanning / scoring pipeline
+    agent.py
+    tools.py
+    scout.py
   interfaces/
-    discord_bot.py     # Discord event layer, permissions, history
-  main.py              # Bootstrapping + entrypoint
+    discord_bot.py
+  main.py
   data/
-    *.template / *.example files only in git
+    committed templates only
 
 docs/
   ARCHITECTURE.md
   EVALUATION.md
   RELEASE_CHECKLIST.md
+  ROADMAP.md
 
 tests/
-  unit tests for core safety and utility behavior
+  security + utility tests
 ```
 
-## CI / Quality Gates
+## Quality Gates
 
-GitHub Actions pipeline runs:
+CI runs:
 
 - `ruff check .`
 - `pytest`
 - `python -m compileall app`
 
-## WOW Roadmap (Now Enabled)
+## Dev Workflow
 
-- Evaluation harness scaffold (`scripts/eval_research.py` + `scripts/prompts.json`)
-- Architecture and release docs
-- Community + governance files (`LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`)
-- Issue/PR templates for higher-signal collaboration
+```bash
+make bootstrap
+make ci
+```
 
-## Publishing Checklist
+## Release Checklist
 
 1. Confirm `.env` is not committed.
-2. Confirm `app/data` has no runtime artifacts in commits.
+2. Confirm `app/data` contains no runtime artifacts.
 3. Run `make ci`.
-4. Validate end-to-end startup from a clean clone.
-5. Tag and release.
+4. Validate startup from a clean clone.
 
-See `docs/RELEASE_CHECKLIST.md`.
-Planned product and quality upgrades live in `docs/ROADMAP.md`.
+Detailed checklist: `docs/RELEASE_CHECKLIST.md`
 
 ## License
 
-MIT. See `LICENSE`.
+MIT (`LICENSE`)
