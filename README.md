@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/katta-logo.png" alt="Katta Logo" width="180">
+  <img src="docs/assets/katta-logo.png" alt="Katta Logo" width="400">
 </p>
 <h1 align="center">Katta</h1>
 <p align="center"><strong>Personal research agent that actually digs deep, with permanent memory.</strong></p>
